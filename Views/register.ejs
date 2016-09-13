@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <% include partials/head.ejs %>
+
+  <style>
+    .navbar-nav li a {
+      color: black !important;
+    }
+    .navbar-nav li button {
+      color: black !important;
+    }
+  </style>
+
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+
+  <div style="padding-top: 50px; width: 300px; height: 300px; margin: 0 auto;">
+    <form role="form" id="register">
+      <div class="form-group">
+        <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" maxlength="20" required>
+      </div>
+      <div class="form-group">
+        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+        <input type="text" class="form-control" id="usrname" placeholder="Enter username" maxlength="15" required>
+      </div>
+      <div class="form-group">
+        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+        <input type="password" class="form-control" id="psw" placeholder="Enter password" maxlength="15" required>
+      </div>
+      <div class="form-group">
+        <label for="psw2"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+        <input type="password" class="form-control" id="psw2" placeholder="Confirm password" maxlength="15" required>
+      </div>
+        <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Register</button>
+    </form>
+    <div id="register-fail" style="color: red; text-align: center;"></div>
+  </div>
+
+
+  <div style="margin-top: 100px;">
+    <% include partials/footer.ejs %>
+  </div>
+
+
+  <% include partials/scripts.ejs %>
+
+
+  <script>
+    (function () {
+
+      $("#register").submit(function() {
+        if (this.psw.value !== this.psw2.value) {
+          document.getElementById("register-fail").innerHTML = 'Passwords do not match';
+          return false;
+        }
+        var register = {email: this.email.value, username: this.usrname.value, password: this.psw.value};
+
+        $.ajax({
+          type: 'POST',
+          url: '/register',
+          data: register,
+          success: function(data) {
+            //location.reload();
+            //window.location = '/';
+            alert(data);
+            window.location = '/';
+          }
+        })
+        return false;
+      });
+
+
+    })();
+  </script>
+
+
+</body>
+</html>

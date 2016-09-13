@@ -1,0 +1,44 @@
+<div id="comment-render-one">
+    <div id="comment-render-one-header">
+      <a href="#" id="comment-author"><%=movie.comments[i].username%></a>
+      <span id="comment-time">
+        <%=movie.comments[i].createdAt.toDateString()%>
+      </span>
+    </div>
+    <div id="comment-render-one-body">
+      <div id="comment-text">
+        <%=movie.comments[i].body%>
+        <br>
+      </div>
+    </div>
+    <div id="comment-render-one-footer">
+      <button type="button" id="comment-reply"  data-toggle="collapse" data-target="#reply-<%=movie.comments[i]._id%>">Reply</button>
+      <% var total = movie.comments[i].likes - movie.comments[i].dislikes %>
+      <% if (total != 0) { %>
+        <span id="likes-<%=movie.comments[i]._id%>" class="likes"><%= total %></span>
+      <% } %>
+      <% if (total == 0) { %>
+        <span id="likes-<%=movie.comments[i]._id%>" class="likes"> </span>
+      <% } %>
+      <button id="comment-reply" class="thumbs-up" data-comment-id="<%=movie.comments[i]._id%>" data-movie-id="<%=movie._id%>" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
+      <button id="comment-reply" class="thumbs-down" data-comment-id="<%=movie.comments[i]._id%>" data-movie-id="<%=movie._id%>" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+
+      <div id="reply-<%=movie.comments[i]._id%>" class="collapse">
+
+        <% if (user != null) { %>
+          <form class="comments-add-reply" data-comment-id="<%=movie.comments[i]._id%>" data-movie-id="<%=movie._id%>" data-user-id="<%=user._id%>" data-username="<%=user.username%>">
+            <textarea name="reply" class="form-control" rows="2" placeholder="Add a reply..." autocomplete="off" required></textarea>
+            <button type="submit" class="btn btn-default btn-sm">Submit</button>
+          </form>
+        <% } %>
+        <% if (user == null) { %>
+          <form class="comments-add-reply" data-comment-id="<%=movie.comments[i]._id%>" data-movie-id="<%=movie._id%>">
+            <textarea name="reply" class="form-control" rows="2" placeholder="Add a reply..." autocomplete="off" required></textarea>
+            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Login to Submit</button>
+          </form>
+        <% } %>
+
+      </div>
+    </div>
+
+</div>

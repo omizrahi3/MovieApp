@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <% include partials/head.ejs %>
+
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+	<div id="hero-image">
+    <div id="hero-image" >
+      <div style="padding: 150px; color: white;">
+          <div class="form-group">
+            <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email : <%=user.email%></label>
+          </div>
+          <div class="form-group">
+            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username : <%=user.username%></label>
+          </div>
+          <div class="form-group">
+            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password : <%=user.password%></label>
+          </div>
+          <div class="form-group">
+            <label for="balance"><span class="glyphicon glyphicon-usd"></span> Balance : <%=user.balance%></label>
+          </div>
+      </div>
+		<h1 id="hero-title">Your Movies</h1>
+	</div>
+
+
+  <div id="posters-wrapper" class="content-padding clearfix">
+
+    <% for (var i = 0; i < user.purchasedMovies.length; i++) { %>
+      <div class="poster">
+
+        <a href="/movie/<%= user.purchasedMovies[i].movieId %>/video-dashboard">
+
+          <img src="http://image.tmdb.org/t/p/w300/<%= user.purchasedMovies[i].poster_url %>" class="img-responsive">
+
+          <div class="poster-info-overlay">
+            <h3><%= user.purchasedMovies[i].movie_title %></h3>
+            <h4>View More <i class="fa fa-arrow-right"></i></h4>
+          </div>
+
+        </a>
+
+      </div>
+    <% } %>
+
+  </div>
+
+
+	<% include partials/footer.ejs %>
+  <% include partials/scripts.ejs %>
+
+
+  <script>
+    (function () {
+
+    })();
+  </script>
+
+
+</body>
+</html>

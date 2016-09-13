@@ -1,0 +1,18 @@
+<div id="comment-render-one" class="comment-render-one-reply">
+  <div id="comment-render-one-header">
+    <a href="#" id="comment-author"><%=movie.comments[i].replies[j].username%></a>
+    <span id="comment-time">
+      <%=movie.comments[i].replies[j].createdAt.toDateString()%>
+    </span>
+  </div>
+  <div id="comment-render-one-body">
+    <div id="comment-text">
+      <%=movie.comments[i].replies[j].body%>
+      <br>
+    </div>
+  </div>
+  <div id="comment-render-one-footer">
+    <button id="comment-reply"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+    <button id="comment-reply"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+  </div>
+</div>

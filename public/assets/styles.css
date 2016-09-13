@@ -1,0 +1,10 @@
+body {
+  background: #f1f1f1 !important;
+}
+.row {
+  display: flex; /* equal height of the children */
+  margin-left: 0px !important;
+}
+.col {
+  flex: 1; /* additionally, equal width */
+}

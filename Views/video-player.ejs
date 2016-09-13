@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+  <% include partials/movie/moviehead.ejs %>
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+
+
+
+	<div>
+    <iframe width="100%" height="660px" src="https://www.youtube.com/embed/<%= stream_path %>?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+	</div>
+  <% include partials/scripts.ejs %>
+<script>
+  (function () {
+
+
+
+  })();
+
+</script>
+
+
+</body>
+</html>

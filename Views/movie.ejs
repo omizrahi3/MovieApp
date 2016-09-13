@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+  <% include partials/movie/moviehead.ejs %>
+
+
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.1.1/jquery.rateyo.min.css">
+
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+	<div id="hero-image-single" style="background-image: url('<%= baseurl+movie.backdrop_url %>');">
+		<h1 id="hero-title"> <%=movie.movie_title%> </h1>
+	</div>
+
+
+	<div class="content-padding clearfix">
+
+		<div class="poster-wrapper">
+      <div class="poster">
+          <img src="<%= baseurl+movie.poster_url %>" class="img-responsive">
+          <div class="poster-info-overlay">
+
+            <% if (user != null) { %>
+              <% if (purchased == false) { %>
+        			     <button type="button" id="poster-button" class="btn btn-warning" onclick="purchase(this);" data-movie-id="<%=movie._id%>" data-user-id="<%=user._id%>">Purchase for $4.99</button>
+        			<% } %>
+        			<% if (purchased == true) { %>
+                  <a href="/movie/<%=movie._id%>/video-dashboard" id="poster-button" class="btn btn-info" role="button">Watch Movie</a>
+
+        			<% } %>
+      			<% } %>
+      			<% if (user == null) { %>
+      			     <button type="button" id="poster-button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Please Login</button>
+      			<% } %>
+
+          </div>
+      </div>
+  	</div>
+
+  	<div class="description-wrapper">
+
+
+  		<div class="description">
+  			<h2 class="movie-header">Overview</h2>
+  			<p> <%=movie.description%> </p>
+  		</div>
+
+      <div class="description">
+  			<h2 class="movie-header">Movie Rating</strong></h2>
+        <div class="row"><h5>Average Rating: <strong id="aveRating"> <%=movie.ave_rating%> </strong></h5></div>
+        <div class="row">
+          <% if (user != null) { %>
+            <div class="col" id="rateYotitle">Add Rating: </div>
+            <div class="col" id="rateYo" data-movie-id="<%=movie._id%>" data-user-id="<%=user._id%>" data-username="<%=user.username%>"></div>
+          <% } %>
+          <% if (user == null) { %>
+            <div class="col" id="rateYotitle">Add Rating: </div>
+            <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Login to Rate</button>
+          <% } %>
+        </div>
+  		</div>
+
+      <div id="discussion" class="">
+
+        <div id="comments-main" class="">
+
+          <div id="comments-main-header" class=""><b>Comments</b> • <%=movie.comments.length%> </div>
+          <div id="comments-add" class="">
+            <% if (user != null) { %>
+              <form class="comments-add-comment" data-movie-id="<%=movie._id%>" data-user-id="<%=user._id%>" data-username="<%=user.username%>">
+                <textarea name="comment" class="form-control" rows="4" placeholder="Add a comment..."></textarea>
+                <button type="submit" class="btn btn-default btn-sm">Submit</button>
+              </form>
+            <% } %>
+            <% if (user == null) { %>
+              <form class="comments-add-comment" data-movie-id="<%=movie._id%>">
+                <textarea name="comment" class="form-control" rows="4" placeholder="Add a comment..."></textarea>
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Login to Submit</button>
+              </form>
+            <% } %>
+          </div>
+
+          <div id="comments-list-all" class="">
+                <% for (var i = movie.comments.length - 1; i >= 0; i--) { %>
+            	  	<section id="comment-thread" data-comment-id="<%=movie.comments[i]._id%>">
+                    <% include partials/movie/comments.ejs %>
+                    <div class="comment-replies" data-comment-id="<%=movie.comments[i]._id%>">
+                      <% for (var j = 0; j < movie.comments[i].replies.length; j++) { %>
+                        <% include partials/movie/replies.ejs %>
+                      <% } %>
+                    </div>
+            			</section>
+            	  <% } %>
+          </div>
+
+        </div>
+
+  		</div>
+
+
+  	</div>
+
+	</div>
+
+
+
+  <% include partials/footer.ejs %>
+
+  <% include partials/scripts.ejs %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.1.1/jquery.rateyo.min.js"></script>
+<script>
+  (function () {
+
+    $("#rateYo").rateYo({
+      rating: <%=movie.ave_rating%>,
+      fullStar: true
+    })
+
+    $("#rateYo").rateYo().on("rateyo.set", function (e, data) {
+      alert(data.rating);
+      var movie_id = this.getAttribute("data-movie-id");
+      var rating = {score: data.rating, user_id: this.getAttribute("data-user-id"), username: this.getAttribute("data-username")};
+      var theUrl = '/movie/'+movie_id+'/ratings';
+      $.ajax({
+        type: 'POST',
+        url: theUrl,
+        data: rating,
+        success: function(data) {
+          $("#aveRating").text(data.average);
+        }
+      })
+    })
+
+    $('form.comments-add-comment').on('submit', function(){
+      var movie_id = this.getAttribute("data-movie-id");
+      var comment = {comment: this.comment.value, user_id: this.getAttribute("data-user-id"), username: this.getAttribute("data-username")};
+      var theUrl = '/movie/'+movie_id+'/comments';
+      $.ajax({
+        type: 'POST',
+        url: theUrl,
+        data: comment,
+        success: function(data) {
+          location.reload();
+        }
+      })
+      return false;
+    });
+
+    $('form.comments-add-reply').on('submit', function(){
+      var movie_id = this.getAttribute("data-movie-id");
+      var comment_id = this.getAttribute("data-comment-id");
+      var reply = {item: this.reply.value, user_id: this.getAttribute("data-user-id"), username: this.getAttribute("data-username")};
+      var theUrl = '/movie/'+movie_id+'/comments/'+comment_id+'/replies';
+      $.ajax({
+        type: 'POST',
+        url: theUrl,
+        data: reply,
+        success: function(data) {
+          location.reload();
+        }
+      })
+      return false;
+    });
+
+    $('.thumbs-down').click(function(){
+      var movie_id = this.getAttribute("data-movie-id");
+      var comment_id = this.getAttribute("data-comment-id");
+      var theUrl = '/movie/'+movie_id+'/comments/'+comment_id+'/dislikes';
+      $.ajax({
+        type: 'POST',
+        url: theUrl,
+        success: function(data) {
+          if (data.sum != 0) {
+            document.getElementById("likes-"+comment_id).innerHTML = data.sum
+          }
+          else document.getElementById("likes-"+comment_id).innerHTML = '';
+        }
+      })
+      return false;
+    });
+    $('.thumbs-up').click(function(){
+      var movie_id = this.getAttribute("data-movie-id");
+      var comment_id = this.getAttribute("data-comment-id");
+      var theUrl = '/movie/'+movie_id+'/comments/'+comment_id+'/likes';
+      $.ajax({
+        type: 'POST',
+        url: theUrl,
+        success: function(data) {
+          if (data.sum != 0) {
+            document.getElementById("likes-"+comment_id).innerHTML = data.sum
+          }
+          else document.getElementById("likes-"+comment_id).innerHTML = '';
+        }
+      })
+      return false;
+    });
+
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+
+    $("#target").submit(function() {
+      var login = {email: this.usrname.value, password: this.psw.value};
+      alert( login.email + " " + login.password );
+      $.ajax({
+        type: 'POST',
+        url: '/login',
+        data: login,
+        dataType: "json",
+        success: function(data) {
+          location.reload();
+        },
+        error: function(xhr) {
+          document.getElementById("login-fail").innerHTML = xhr.responseText;
+        }
+      })
+      return false;
+    });
+
+
+  })();
+
+  function purchase(e) {
+    //alert('movie id: '+e.getAttribute("data-movie-id")+' user id: '+e.getAttribute("data-user-id"));
+    var movie_id = e.getAttribute("data-movie-id");
+    var purchase = {user_id: e.getAttribute("data-user-id")};
+    var theUrl = '/movie/'+movie_id+'/purchase';
+    $.ajax({
+      type: 'POST',
+      url: theUrl,
+      data: purchase,
+      success: function(data) {
+        //alert('new balance is ' + data.balance);
+        location.reload();
+      }
+    })
+    return false;
+  }
+</script>
+
+
+</body>
+</html>

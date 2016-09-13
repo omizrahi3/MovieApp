@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+  <% include partials/movie/moviehead.ejs %>
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+	<div id="hero-image-single" style="background-image: url('<%= baseurl+movie.backdrop_url %>');">
+		<h1 id="hero-title"> <%=movie.movie_title%> </h1>
+	</div>
+
+
+	<div class="content-padding clearfix">
+
+		<div class="poster-wrapper">
+      <div class="poster">
+          <img src="<%= baseurl+movie.poster_url %>" class="img-responsive">
+      </div>
+  	</div>
+
+  	<div class="description-wrapper">
+
+
+  		<div class="description">
+  			<h2 class="movie-header">Videos</h2>
+
+        <ul class="list-group">
+
+        <% for (var i = 0; i < movie.videos.length; i++) { %>
+          <li class="list-group-item"><a href="/movie/<%= movie._id %>/video-dashboard/<%= movie.videos[i].video_path %>"><%= movie.videos[i].video_title %></a></li>
+          <!-- <li class="list-group-item"><a href="https://www.youtube.com/watch?v=<%= movie.videos[i].video_path %>"><%= movie.videos[i].video_title %></a></li>-->
+    	  <% } %>
+
+        </ul>
+  		</div>
+  	</div>
+	</div>
+
+  <% include partials/footer.ejs %>
+  <% include partials/scripts.ejs %>
+<script>
+  (function () {
+
+
+
+  })();
+
+</script>
+
+
+</body>
+</html>

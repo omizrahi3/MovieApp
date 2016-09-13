@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <% include partials/head.ejs %>
+
+</head>
+<body>
+
+	<% include partials/header.ejs %>
+  <% include partials/login-module.ejs %>
+
+	<div id="hero-image">
+		<h1 id="hero-title"><%= title %></h1>
+	</div>
+
+
+	<div id="posters-wrapper" class="content-padding clearfix">
+
+	  <% for (var i = 0; i < movies.length; i++) { %>
+	  	<div class="poster">
+        <a href=<%= movieurl+movies[i].id %>>
+
+			  	<img src="<%= baseurl+movies[i].poster_path %>" class="img-responsive">
+
+			  	<div class="poster-info-overlay">
+			  		<h3><%= movies[i].title %></h3>
+			  		<h4>View More <i class="fa fa-arrow-right"></i></h4>
+			  	</div>
+
+		  	</a>
+
+			</div>
+	  <% } %>
+
+	</div>
+
+
+	<% include partials/footer.ejs %>
+  <% include partials/scripts.ejs %>
+
+
+  <script>
+    (function () {
+
+      $("#myBtn").click(function(){
+          $("#myModal").modal();
+      });
+
+      $("#target").submit(function() {
+        var login = {email: this.usrname.value, password: this.psw.value};
+        alert( login.email + " " + login.password );
+        $.ajax({
+          type: 'POST',
+          url: '/login',
+          data: login,
+          dataType: "json",
+          success: function(data) {
+            window.location = '/dashboard';
+          },
+          error: function(xhr) {
+            document.getElementById("login-fail").innerHTML = xhr.responseText;
+            //window.location = '/register';
+          }
+        })
+        return false;
+      });
+
+    })();
+  </script>
+
+
+</body>
+</html>
