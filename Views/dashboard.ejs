@@ -38,6 +38,7 @@
             <form action="/charge" method="POST">
             <script
               src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-email = <%=user.email%>
               data-key="pk_test_V25Swvdq4P2ilmalPkY2Kqzg"
               data-amount="2000"
               data-name="Movie App"
