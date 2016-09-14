@@ -139,7 +139,7 @@ function purchaseMovie(movie_id, user, callback) {
       user.purchasedMovies.push(
         {movieId: movie_id, movie_title: movie.movie_title, poster_url: movie.poster_url}
       )
-      user.balance = user.balance - 4.99;
+      user.balance = user.balance - 499;
       user.save(function(err, userSaved) {
         callback(err, userSaved)
       });
@@ -222,6 +222,10 @@ module.exports = function(app) {
   //DISLIKES
 
   app.post('/movie/:movie_id/purchase', function(req, res){
+    if (req.user.balance < 499) {
+      console.log('Payment required. You need to deposit funds into account');
+      return res.status(402).send('Payment required');
+    }
     purchaseMovie(req.params.movie_id, req.user, function(err, updatedUser) {
       //console.log(updatedUser);
       res.send(updatedUser);

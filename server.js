@@ -1,3 +1,5 @@
+"use strict"
+
 var express = require('express');
 var bodyparser = require('body-parser');
 var bcrypt = require('bcryptjs');
@@ -11,9 +13,7 @@ app.set('view engine', 'ejs');
 
 mongoose.Promise = global.Promise;
 
-/*
-mongoose.connect('mongodb://localhost/**ADD DOC NAME HERE**');
-*/
+mongoose.connect('mongodb://localhost/storemovies1');
 
 app.use(express.static('./public'));
 app.use(bodyparser.json());
@@ -21,13 +21,13 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 app.use(sessions({
   cookieName: 'session',
-  //secret: '** ADD SECRET CODE HERE **',
+  secret: 'hukl2oiiros9d39220jisps932j929459rj',
   duration: 30 * 60* 1000,
   activeDuration: 5 * 60 * 1000,
 }));
 
 router(app);
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
   console.log('listening on port 3000');
 });

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+
   <% include partials/movie/moviehead.ejs %>
+  <link href="/assets/styles.css" rel="stylesheet" type="text/css" />
 
 
   <!-- Latest compiled and minified CSS -->
@@ -238,6 +239,11 @@
       success: function(data) {
         //alert('new balance is ' + data.balance);
         location.reload();
+      },
+      error: function(xhr) {
+        //poster-button
+        document.getElementById("poster-button").innerHTML = xhr.responseText;
+        //alert(xhr.responseText);
       }
     })
     return false;

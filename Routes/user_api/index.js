@@ -7,7 +7,7 @@ function addUserToDB(eml, usern, psw, callback) {
     email: eml,
     username: usern,
     password: hash,
-    balance: 50.00
+    balance: 2000
   });
   addUser.save(function(err, userSaved) {
     callback(err, userSaved)

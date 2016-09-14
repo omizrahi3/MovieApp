@@ -1,0 +1,61 @@
+
+/*
+ * Dashboard page settings.
+ */
+.dashboard .api-keys {
+  margin-top: 3em;
+}
+
+.dashboard .api-key-container {
+  min-height: 4em;
+}
+
+.dashboard .widgets {
+  margin-top: 4em;
+}
+
+.dashboard .api-key-secret {
+  color: red;
+}
+
+.dashboard h3 {
+  font-size: 1.2em !important;
+}
+
+.dashboard span.api-key-id, .dashboard span.api-key-secret {
+  font-family: "Lucida Console", Monaco, monospace;
+  margin-left: .5em;
+}
+
+.dashboard .left {
+  float: left;
+}
+
+.dashboard .right {
+  float: right;
+}
+
+.dashboard .panel {
+  padding-bottom: 2em;
+}
+
+.dashboard .panel-heading {
+  margin-bottom: 2em;
+}
+
+.dashboard .analytics-content, .dashboard .billing-content {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.dashboard .account-balance, .dashboard .total-queries {
+  font-size: 2em;
+}
+
+.dashboard form {
+  margin-top: 2em;
+}
+
+#contdash {
+	padding-top: 100px !important;
+}

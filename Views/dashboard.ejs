@@ -3,52 +3,69 @@
 <head>
 
   <% include partials/head.ejs %>
+  <link href="/assets/dashboard.css" rel="stylesheet" type="text/css" >
 
 </head>
 <body>
 
 	<% include partials/header.ejs %>
-  <% include partials/login-module.ejs %>
 
-	<div id="hero-image">
-    <div id="hero-image" >
-      <div style="padding: 150px; color: white;">
+<div id="hero-image">
+  <div class="container dashboard" id="contdash">
+    <div class="row widgets">
+      <div class="col-md-offset-1 col-md-5">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">
+            <h3 class="panel-title">User Info</h3>
+          </div>
+
           <div class="form-group">
             <label for="email"><span class="glyphicon glyphicon-envelope"></span> Email : <%=user.email%></label>
           </div>
           <div class="form-group">
             <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username : <%=user.username%></label>
           </div>
-          <div class="form-group">
-            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password : <%=user.password%></label>
-          </div>
-          <div class="form-group">
-            <label for="balance"><span class="glyphicon glyphicon-usd"></span> Balance : <%=user.balance%></label>
-          </div>
-      </div>
-		<h1 id="hero-title">Your Movies</h1>
-	</div>
 
+
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">
+            <h3 class="panel-title">Billing</h3>
+          </div>
+          <div class="billing-content text-center"><span class="account-balance"><%= (user.balance / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) %></span><br/><span><i>*current account balance</i></span>
+            <form action="/charge" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_V25Swvdq4P2ilmalPkY2Kqzg"
+              data-amount="2000"
+              data-name="Movie App"
+              data-description=""
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto">
+            </script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1 id="hero-title">Your Movies</h1>
+  </div>
 
   <div id="posters-wrapper" class="content-padding clearfix">
-
     <% for (var i = 0; i < user.purchasedMovies.length; i++) { %>
       <div class="poster">
-
         <a href="/movie/<%= user.purchasedMovies[i].movieId %>/video-dashboard">
-
           <img src="http://image.tmdb.org/t/p/w300/<%= user.purchasedMovies[i].poster_url %>" class="img-responsive">
-
           <div class="poster-info-overlay">
             <h3><%= user.purchasedMovies[i].movie_title %></h3>
             <h4>View More <i class="fa fa-arrow-right"></i></h4>
           </div>
-
         </a>
-
       </div>
     <% } %>
-
   </div>
 
 
