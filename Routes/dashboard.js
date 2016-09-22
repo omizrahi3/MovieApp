@@ -1,18 +1,9 @@
-var User = require('./../Models/User.model');
+"use strict"
 
-function requireLogin(req, res, next) {
-  if (!req.user) {
-    req.session.reset();
-    res.redirect('/');
-  }
-  else next();
-}
+var dashboardController = require('./../Controllers/dashboard.controller')
 
 module.exports = function(app) {
 
-  app.get('/dashboard', requireLogin, function(req, res){
-    res.locals.title = 'dashboard';
-    res.render('dashboard');
-  });
+  app.get('/dashboard', dashboardController.requireLogin, dashboardController.getDashboard);
 
 }

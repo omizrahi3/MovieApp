@@ -1,5 +1,7 @@
+"use strict"
+
+var _404Controller = require('./../Controllers/404.controller')
+
 module.exports = function(app) {
-  app.get('*', function(req, res){
-    res.status(404).send('404 Page Not Found');
-  });
+  app.get('*', _404Controller);
 }
