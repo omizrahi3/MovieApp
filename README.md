@@ -27,7 +27,7 @@ Features
 
 Getting started with MovieApp is super easy! Simply fork this repository and follow the instructions below.
 
-Getting Started with Slate
+Getting Started with MovieApp
 ------------------------------
 
 ### Prerequisites
