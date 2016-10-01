@@ -1,10 +1,10 @@
 /* jshint node: true */
 
 //************************************************************
-//  register.js                                             //
+//  register.controller.js                                  //
 //  MovieApp                                                //
 //                                                          //
-//  Created by Odell Mizrahi on 9/13/16.                    //
+//  Created by Odell Mizrahi on 9/30/16.                    //
 //  Copyright © 2016 Odell Mizrahi. All rights reserved.    //
 //                                                          //
 //  Date        Name        Description                     //
@@ -14,8 +14,24 @@
 //************************************************************
 "use strict"
 
-var registerController = require('./../Controllers/register.controller');
+var User = require('./../Models/User.model');
 
-module.exports = function(app) {
-  app.get('/register', registerController.requireNoLogin, registerController.register);
+var requireNoLogin = function(req, res, next)
+{
+  if (req.user) {
+    res.redirect('/');
+  }
+  else next();
+}
+
+var register = function(req, res)
+{
+    res.locals.title = 'register';
+    res.render('register');
+}
+
+module.exports =
+{
+    requireNoLogin: requireNoLogin,
+    register: register
 }

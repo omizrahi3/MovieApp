@@ -1,7 +1,7 @@
 var User = require('./../../Models/User.model');
 var bcrypt = require('bcryptjs');
 var stripe = require("stripe")(
-  "YOUR SECRET KEY HERE"
+  "YOUR STRIPE KEY HERE"
 );
 
 function addUserToDB(eml, usern, psw, callback) {

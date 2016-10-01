@@ -1,36 +1,23 @@
-var MovieDB = require('moviedb')('188b29beddd76833cd397ee65e9e4eaa');
-var User = require('./../../Models/User.model');
+/* jshint node: true */
+
+//************************************************************
+//  tmdb_api/index.js                                       //
+//  MovieApp                                                //
+//                                                          //
+//  Created by Odell Mizrahi on 9/30/16.                    //
+//  Copyright © 2016 Odell Mizrahi. All rights reserved.    //
+//                                                          //
+//  Date        Name        Description                     //
+//  -------     ---------   --------------                  //
+//  30Sep16     O. Mizrahi  Initial Design                  //
+//                                                          //
+//************************************************************
+"use strict"
+
+var tmdb_apiController = require('./../../Controllers/tmdb_api.controller');
 
 module.exports = function(app) {
-
-  app.get('/most-popular', function(req, res){
-    MovieDB.miscPopularMovies(function(error, response){
-      res.locals.movies = response.results;
-      res.locals.movieurl = "/movie/";
-      res.locals.baseurl = "http://image.tmdb.org/t/p/w300";
-      res.locals.title = 'Most Popular';
-      res.render('index');
-    });
-  });
-
-  app.get('/coming-soon', function(req, res){
-    MovieDB.miscUpcomingMovies(function(error, response){
-      res.locals.movies = response.results;
-      res.locals.movieurl = "/movie/";
-      res.locals.baseurl = "http://image.tmdb.org/t/p/w300";
-      res.locals.title = 'Coming Soon';
-      res.render('index');
-    });
-  });
-
-  app.get('/top-rated', function(req, res){
-    MovieDB.miscTopRatedMovies(function(error, response){
-      res.locals.movies = response.results;
-      res.locals.movieurl = "/movie/";
-      res.locals.baseurl = "http://image.tmdb.org/t/p/w300";
-      res.locals.title = 'Top Rated';
-      res.render('index');
-    });
-  });
-
+  app.get('/most-popular', tmdb_apiController.mostPopular);
+  app.get('/coming-soon', tmdb_apiController.comingSoon);
+  app.get('/top-rated', tmdb_apiController.topRated);
 }

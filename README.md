@@ -63,4 +63,4 @@ Need Help? Found a bug?
 Contributors
 --------------------
 
-Slate was built by [Odell Mizrahi](https://github.com/omizrahi3) during summer 2016.
+MovieApp was built by [Odell Mizrahi](https://github.com/omizrahi3) during summer 2016.

@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/storemovies1');
+mongoose.connect('mongodb://localhost/YOUR DB HERE');
 
 app.use(express.static('./public'));
 app.use(bodyparser.json());
@@ -36,7 +36,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 app.use(sessions({
   cookieName: 'session',
-  secret: 'hukl2oiiros9d39220jisps932j929459rj',
+  secret: 'YOUR SECRET KEY HERE',
   duration: 30 * 60* 1000,
   activeDuration: 5 * 60 * 1000,
 }));

@@ -1,10 +1,10 @@
 /* jshint node: true */
 
 //************************************************************
-//  register.js                                             //
+//  logout.controller.js                                    //
 //  MovieApp                                                //
 //                                                          //
-//  Created by Odell Mizrahi on 9/13/16.                    //
+//  Created by Odell Mizrahi on 9/30/16.                    //
 //  Copyright © 2016 Odell Mizrahi. All rights reserved.    //
 //                                                          //
 //  Date        Name        Description                     //
@@ -14,8 +14,13 @@
 //************************************************************
 "use strict"
 
-var registerController = require('./../Controllers/register.controller');
+var logout = function(req, res)
+{
+    req.session.reset();
+    res.redirect('/');
+}
 
-module.exports = function(app) {
-  app.get('/register', registerController.requireNoLogin, registerController.register);
+module.exports =
+{
+    logout: logout
 }
